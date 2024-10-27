@@ -1,0 +1,88 @@
+.nav {
+    width: 20%;
+    height: 100vh;
+    background-color: rgb(51, 65, 85);
+    padding: 40px 30px;
+    position: fixed;
+}
+
+.profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 23px;
+    font-weight: 500;
+    color: white;
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    object-fit: none;
+    object-position: center;
+    border: 2px solid black;
+    margin-right: 30px;
+}
+
+.menu {
+    margin-top: 30px;
+}
+
+.menu-options {
+    list-style: none;
+    font-size: 23px;
+    color: lightgray;
+    width: 100%;
+}
+
+.option {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 30px;
+    transition: 0.3s all;
+}
+
+.option:hover {
+    background-color: lightyellow;
+    color: black;
+    transition: 0.3s all;
+}
+
+.nav-logo img {
+    width: 100%;
+}
+
+.nav-logo {
+    position: relative;
+    left: 50%;
+    transform: translateX(-55%);
+    top: -6%;
+    width: 300px;
+}
+
+.sign-out {
+    position: absolute;
+    bottom: 12%;
+    width: 86%;
+}
+
+.sign_out-button {
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 21px;
+    transition: 0.3s all;
+    border: none;
+    background-color: inherit;
+    padding: 10px;
+    color: lightgrey;
+    width: 100%;
+    text-align-last: left;
+}
+
+.sign_out-button:hover {
+    background-color: lightyellow;
+    color: black;
+    transition: 0.3s all;
+}

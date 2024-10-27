@@ -1,0 +1,131 @@
+.background-img-login {
+    background: url(https://png.pngtree.com/background/20230426/original/pngtree-ice-skater-performing-jumps-and-tricks-picture-image_2480488.jpg) center center/cover no-repeat;
+    width: 50%;
+    height: 100vh;
+    position: fixed;
+    left: 50%;
+}
+
+.background-img-register {
+    background: url(https://png.pngtree.com/background/20230426/original/pngtree-ice-skater-performing-jumps-and-tricks-picture-image_2480488.jpg) center center/cover no-repeat;
+    width: 50%;
+    height: 100vh;
+    position: fixed;
+}
+
+.background-img-login:before, .background-img-register:before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.form-container {
+    display: block;
+    position: absolute;
+    background-color: rgba(51, 65, 85, 0.8);
+    width: 50%;
+    height: 100vh;
+    box-shadow: 1px 5px 10px black;
+}
+
+.form-container-register {
+    left: 50%;
+}
+
+form {
+    border: 1px solid lightgrey;
+    color: lightgray;
+    padding: 30px;
+    width: 450px;
+    height: auto;
+    position: relative;
+    border-radius: 15px;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    box-shadow: 5px 5px 10px black;
+    background-color: rgba(51, 65, 85, 0.8);
+}
+
+form div{
+    margin-top: 30px;
+    border-bottom: 1px solid lightgray;
+}
+
+form div:nth-child(1){
+    margin-top: 0px;
+}
+
+input {
+    font-size: 20px;
+    padding: 5px;
+    border: none;
+    float: right;
+    color: lightgray;
+    background-color: inherit;
+}
+
+input:focus {
+    outline: none;
+    background-color: inherit;
+}
+
+.log_reg-button {
+    padding: 8px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid  lightgrey;
+    background-color: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: 0.3s all ease-out;
+}
+
+.log_reg-button:hover {
+    background-color: lightgrey;
+    color: black;
+    transition: 0.3s all;
+}
+
+.register-link {
+    font-size: 25px;
+    margin-top: 0px;
+    border: none;
+}
+
+.register-link .link {
+    margin-left: 10px;
+    text-decoration: underline;
+}
+
+.login-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    border: none;
+}
+
+.main-logo-login img, .main-logo-register img {
+    width: 400px;
+    height: auto;
+}
+
+.main-logo-login {
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    transform: translateX(-50%);
+}
+
+.main-logo-register {
+    position: absolute;
+    left: 75%;
+    top: 4%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
