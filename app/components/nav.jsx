@@ -27,14 +27,13 @@ export default function Nav(props) {
                 <div className="profile-pic-wrapper">
                     <Image 
                         className="profile-pic"
-                        src="/images/profile.jpeg" 
+                        src="/images/def-profile-male.png" 
                         alt="profile-pic" 
                         width="60"
                         height="75"
                     />
                 </div>
                 <div>Artem Markelov</div>
-                <div className="profile-name">{props.name}</div>
             </div>
             <div className="menu">
                 <ul className="menu-options">
@@ -46,6 +45,11 @@ export default function Nav(props) {
                     <Link className="link" href="/schedule">
                         <li className="option">
                             Schedule
+                        </li>
+                    </Link>
+                    <Link className="link" href="/billing">
+                        <li className="option">
+                            Billing
                         </li>
                     </Link>
                     <Link className="link" href="/settings">

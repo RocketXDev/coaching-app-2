@@ -5,6 +5,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
+import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd} from "../error-codes";
 
 
 
@@ -12,6 +13,8 @@ export default function Register() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [errorCode, setErrorCode] = useState("");
 
     const router = useRouter();
 
@@ -22,9 +25,8 @@ export default function Register() {
             router.push('/home');
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            setErrorCode(error.code);
+            console.log(errorCode);
         })
     }
 
@@ -35,18 +37,20 @@ export default function Register() {
                 </div>
             <div className="form-container form-container-register">
                 <form>
-                <div>
+                    {/* <div>
                         <label htmlFor="name">Name:</label>
-                        <input id="name" name="name" type="text"></input>
-                    </div>
+                        <input autoComplete="off" id="name" name="name" type="text"></input>
+                    </div> */}
                     <div>
                         <label htmlFor="email">Email:</label>
-                        <input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        <input autoComplete="off" value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                     </div>
+                    {(errorCode === errorExistingUser) ? <div className="error-msg">Invalid Email</div> : ""}
                     <div>
                         <label htmlFor="password">Password:</label>
                         <input value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
                     </div>
+                    {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleRegistration()}} type="button"> Register</button>
                         <div className="register-link">Already registered? 

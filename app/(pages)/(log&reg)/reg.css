@@ -1,5 +1,5 @@
 .background-img-login {
-    background: url(https://png.pngtree.com/background/20230426/original/pngtree-ice-skater-performing-jumps-and-tricks-picture-image_2480488.jpg) center center/cover no-repeat;
+    background: url("../../../public/images/bg-img.png") center center/cover no-repeat;
     width: 50%;
     height: 100vh;
     position: fixed;
@@ -7,7 +7,7 @@
 }
 
 .background-img-register {
-    background: url(https://png.pngtree.com/background/20230426/original/pngtree-ice-skater-performing-jumps-and-tricks-picture-image_2480488.jpg) center center/cover no-repeat;
+    background: url("../../../public/images/bg-img.png") center center/cover no-repeat;
     width: 50%;
     height: 100vh;
     position: fixed;
@@ -129,3 +129,10 @@ input:focus {
     z-index: 10;
 }
 
+.error-msg {
+    border-bottom: none;
+    color: rgb(231, 89, 89);
+    text-align: center;
+    text-decoration: underline;
+    /* display: none; */
+}
