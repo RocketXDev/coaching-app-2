@@ -36,11 +36,11 @@ export default function Login() {
                 <form method="POST">
                     <div>
                         <label htmlFor="email">Email:</label>
-                        <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        <input required value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                     </div>
                     <div>
                         <label htmlFor="password">Password:</label>
-                        <input value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
+                        <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
                     </div>
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>

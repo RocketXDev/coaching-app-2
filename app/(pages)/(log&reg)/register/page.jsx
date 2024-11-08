@@ -35,17 +35,13 @@ export default function Register() {
                 </div>
             <div className="form-container form-container-register">
                 <form>
-                <div>
-                        <label htmlFor="name">Name:</label>
-                        <input id="name" name="name" type="text"></input>
-                    </div>
                     <div>
                         <label htmlFor="email">Email:</label>
-                        <input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        <input required value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                     </div>
                     <div>
                         <label htmlFor="password">Password:</label>
-                        <input value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
+                        <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
                     </div>
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleRegistration()}} type="button"> Register</button>
