@@ -5,12 +5,15 @@ import { useState } from "react";
 import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import {errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorOther} from "../error-codes"
 
 
 export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [errorCode, setErrorCode] = useState("");
 
     const router = useRouter();
 
@@ -21,9 +24,8 @@ export default function Login() {
             router.push('/home');
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+            setErrorCode(error.code);
+            console.log(errorCode);
         })
     }
 
@@ -36,12 +38,14 @@ export default function Login() {
                 <form method="POST">
                     <div>
                         <label htmlFor="email">Email:</label>
-                        <input required value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                     </div>
+                    {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
                     <div>
                         <label htmlFor="password">Password:</label>
                         <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
                     </div>
+                    {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>
                         <div className="register-link">New here? 
