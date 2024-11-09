@@ -7,8 +7,6 @@ import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd} from "../error-codes";
 
-
-
 export default function Register() {
 
     const [email, setEmail] = useState("");

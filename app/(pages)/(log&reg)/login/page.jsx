@@ -46,6 +46,9 @@ export default function Login() {
                         <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
                     </div>
                     {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
+                    <div className="password-info">
+                        <a className="password-restore-link">Forgot password?</a>
+                    </div>
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>
                         <div className="register-link">New here? 

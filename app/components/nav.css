@@ -86,3 +86,8 @@
     color: black;
     transition: 0.3s all;
 }
+
+.profile-wrapper-main {
+    display: block;
+    margin-top: -30px;
+}
