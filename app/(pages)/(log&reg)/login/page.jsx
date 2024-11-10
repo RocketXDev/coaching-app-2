@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import {errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorOther} from "../error-codes"
 
 
@@ -15,7 +15,21 @@ export default function Login() {
 
     const [errorCode, setErrorCode] = useState("");
 
+    const [forgotPassword, setForgotPassword] = useState(false);
+
     const router = useRouter();
+
+    const sendResetPassword = () => {
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            setForgotPassword(!forgotPassword);
+            router.push('/login')
+        })
+        .catch((error) => {
+            setErrorCode(error.code);
+            console.log(errorCode);
+        })
+    }
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
@@ -41,14 +55,22 @@ export default function Login() {
                         <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                     </div>
                     {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
+                    {forgotPassword ? 
+                    "" :
                     <div>
                         <label htmlFor="password">Password:</label>
                         <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
-                    </div>
+                    </div>}
                     {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
+                    {forgotPassword ? 
                     <div className="password-info">
-                        <a className="password-restore-link">Forgot password?</a>
+                        <a onClick={()=> {sendResetPassword()}} className="password-restore-link">Send reset password link</a>
+                    </div>:
+                    <div className="password-info">
+                        <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Forgot password?</a>
                     </div>
+                    }
+
                     <div className="login-info">
                         <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>
                         <div className="register-link">New here? 
