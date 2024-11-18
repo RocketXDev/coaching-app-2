@@ -1,5 +1,5 @@
 "use client";
-import "../reg.css";
+import "../auth.css";
 import Link from "next/link";
 import { useState } from "react";
 import {auth} from "../../../firebase/config";

@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import "../reg.css";
+import "../auth.css";
 import { useState } from "react";
 import { createUserWithEmailAndPassword} from "firebase/auth";
 import {auth} from "../../../firebase/config";
