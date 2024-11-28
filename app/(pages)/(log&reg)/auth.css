@@ -162,6 +162,20 @@ input:focus {
     border-bottom: none;
 }
 
+.password-icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 40px;
+    bottom: 56%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-icon-reg {
+    bottom: 35%;
+}
+
 /* AUTOCOMPLTE STYLES */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

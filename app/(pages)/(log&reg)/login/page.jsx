@@ -12,11 +12,9 @@ export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
     const [errorCode, setErrorCode] = useState("");
-
     const [forgotPassword, setForgotPassword] = useState(false);
-
+    const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
 
     const handleLogin = () => {
@@ -80,7 +78,8 @@ export default function Login() {
                         {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
                         <div>
                             <label htmlFor="password">Password:</label>
-                            <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
+                            <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
+                            <img onClick={()=>{setShowPassword(!showPassword)}} className="password-icon" src="/images/hide.png" alt="show-password-icon" />
                         </div>
                         {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
                         <div className="password-info">
