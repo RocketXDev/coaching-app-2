@@ -150,6 +150,10 @@ input:focus {
     text-decoration: underline;
 }
 
+.reset-password-wrapper {
+    border-bottom: none;
+}
+
 /* AUTOCOMPLTE STYLES */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
