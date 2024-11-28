@@ -19,18 +19,6 @@ export default function Login() {
 
     const router = useRouter();
 
-    const sendResetPassword = () => {
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            setForgotPassword(!forgotPassword);
-            router.push('/login')
-        })
-        .catch((error) => {
-            setErrorCode(error.code);
-            console.log(errorCode);
-        })
-    }
-
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -43,7 +31,21 @@ export default function Login() {
         })
     }
 
-    const forgotPasswordWindow = () => {
+    const handleForgotPassword = () => {
+
+        const sendResetPassword = (e) => {
+            e.preventDefault();
+            sendPasswordResetEmail(auth, email)
+            .then(() => {
+                setForgotPassword(!forgotPassword);
+                router.push('/login')
+            })
+            .catch((error) => {
+                setErrorCode(error.code);
+                console.log(errorCode);
+            })
+        }
+
         return (
             <div className="reset-password-wrapper">
                 <div>
@@ -51,7 +53,7 @@ export default function Login() {
                     <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                 </div>
                 <div className="password-info reset-password">
-                    <button className=" log_reg-button" onClick={()=> {sendResetPassword()}} >Send reset password link</button>
+                    <button className=" log_reg-button" onClick={(e)=> {sendResetPassword(e)}} >Send reset password link</button>
                     <br></br>
                     <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Come back to log in</a>
                 </div>
@@ -67,34 +69,34 @@ export default function Login() {
                     <img src="/images/logo_transparent.png" alt="logo" />
                 </div>
                 {forgotPassword ?
-                    <form className="initial-login" method="POST">
-                    <div>
-                        <label htmlFor="email">Email:</label>
-                        <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
-                    </div>
-                    {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
-                    <div>
-                        <label htmlFor="password">Password:</label>
-                        <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
-                    </div>
-                    {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
-                    <div className="password-info">
-                        <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Forgot password?</a>
-                    </div>
-                    <div className="login-info">
-                    <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>
-                    <div className="register-link">New here? 
-                                    <Link
-                                        href="/register"
-                                        className="link">
-                                        Create account
-                                    </Link>
-                    </div>
-                    </div>
-
-                    </form>:
                     <form className="forgot-password-window" method="POST">
-                        {forgotPasswordWindow()}
+                        {handleForgotPassword()}
+                    </form>:
+                    <form className="initial-login" method="POST">
+                        <div>
+                            <label htmlFor="email">Email:</label>
+                            <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        </div>
+                        {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
+                        <div>
+                            <label htmlFor="password">Password:</label>
+                            <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type="password"></input>
+                        </div>
+                        {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
+                        <div className="password-info">
+                            <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Forgot password?</a>
+                        </div>
+                        <div className="login-info">
+                        <button className="log_reg-button" onClick={()=>{handleLogin()}} type="button"> Log in</button>
+                        <div className="register-link">New here? 
+                                        <Link
+                                            href="/register"
+                                            className="link">
+                                            Create account
+                                        </Link>
+                        </div>
+                        </div>
+
                     </form>
                 } 
 
