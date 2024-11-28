@@ -34,7 +34,7 @@ export default function Nav(props) {
                             height="75"
                         />
                     </div>
-                    <div>Artem Markelov</div>
+                    <div className="">{props.name}</div>
                 </div>
                 <div className="menu">
                     <ul className="menu-options">

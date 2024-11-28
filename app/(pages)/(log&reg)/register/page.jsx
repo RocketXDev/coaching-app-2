@@ -3,24 +3,34 @@ import Link from "next/link";
 import "../auth.css";
 import { useState } from "react";
 import { createUserWithEmailAndPassword} from "firebase/auth";
-import {auth} from "../../../firebase/config";
+import {auth, app} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd} from "../error-codes";
+import { doc, setDoc, getFirestore, Timestamp } from "firebase/firestore"; 
 
 export default function Register() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-
+    const [userName, setUserName] = useState("");
     const [errorCode, setErrorCode] = useState("");
-
     const router = useRouter();
+    const db = getFirestore(app);
+
+    const createUserAccount = async(userUid) => {
+        const docRef = await setDoc(doc(db, "users", userUid), {
+            uid: userUid,
+            name: userName,
+            email: email,
+            creationDate: Timestamp.now()
+        }, {merge: true});
+    }
 
     const handleRegistration = () => {
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
+            createUserAccount(user.uid);
             router.push('/home');
         })
         .catch((error) => {
@@ -38,7 +48,7 @@ export default function Register() {
                 <form>
                 <div>
                         <label htmlFor="name">Name:</label>
-                        <input onChange={(e)=>{setName(e.target.value)}} value={name} id="name" name="name" type="text"></input>
+                        <input onChange={(e)=>{setUserName(e.target.value)}} value={userName} id="name" name="name" type="text"></input>
                     </div>
                     <div>
                         <label htmlFor="email">Email:</label>
