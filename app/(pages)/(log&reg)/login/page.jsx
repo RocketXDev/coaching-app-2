@@ -52,7 +52,6 @@ export default function Login() {
                 </div>
                 <div className="password-info reset-password">
                     <button className=" log_reg-button" onClick={(e)=> {sendResetPassword(e)}} >Send reset password link</button>
-                    <br></br>
                     <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Come back to log in</a>
                 </div>
             </div>

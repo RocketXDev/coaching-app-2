@@ -150,12 +150,13 @@ input:focus {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 .password-restore-link {
     cursor: pointer;
     font-size: 20px;
     text-decoration: underline;
+    
 }
 
 .reset-password-wrapper {
