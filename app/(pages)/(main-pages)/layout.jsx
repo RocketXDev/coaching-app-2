@@ -1,11 +1,12 @@
 'use client'
-import Nav from "../../components/nav"
+import Nav from "../../components/Nav";
 import localFont from "next/font/local"
 import "../../globals.css"
 import { useEffect, useState } from "react";
 import {auth, app} from '../../firebase/config'
 import { useRouter } from "next/navigation";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import LoadingPage from "../../components/LoadingPage";
 
 
 const geistSans = localFont({
@@ -19,33 +20,41 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+
 export default function MainLayout({ children }) {
 
   const user = auth.currentUser;
   const db = getFirestore(app);
   const router = useRouter();
   const [userName, setUserName] = useState("");
+  const [loadPage, setLoadPage] = useState(false);
 
-  const getData = async(uid) => {
+  useEffect(() => {
+    if (user) {
+      const uid = user.uid;
+      setLoadPage(true);
+      getName(uid);
+    } else {
+      router.push("/login");
+    }
+  }, [])
+
+  const getName = async(uid) => {
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
     setUserName(docSnap.data().name);
   }
 
-
-  useEffect(() => {
-    if (user) {
-      const uid = user.uid;
-      getData(uid);
-    } else {
-      router.push("/login")
-    }
-  }, [])
-
   return (
       <section>
-        <Nav name = {userName}/>
-        <div className="content">{children}</div>
+        {loadPage ?
+        <>
+          <Nav name = {userName}/>
+          <div className="content">{children}</div>
+        </> :
+        <LoadingPage/>
+        }
+
       </section>
   )
 

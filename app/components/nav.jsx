@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import "../components/nav.css";
+import "./css/nav.css";
 import "../globals.css";
 import { signOut } from "firebase/auth";
 import {auth} from '../firebase/config';
