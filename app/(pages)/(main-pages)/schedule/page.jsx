@@ -8,7 +8,7 @@ export default function Schedule() {
         <div className="schedule-wrapper">
             <div className="calender-app">
                 <div className="calender">
-                    <h1 className="heading">Calender</h1>
+                    <h1 className="heading">Schedule</h1>
                     <div className="navigate-date">
                         <h2 className="month">November</h2>
                         <h2 className="year">2024</h2>
@@ -40,7 +40,7 @@ export default function Schedule() {
                         <span>11</span>
                         <span>12</span>
                         <span>13</span>
-                        <span>14</span>
+                        <span id='cur'>14</span>
                         <span>15</span>
                         <span>16</span>
                         <span>17</span>
@@ -72,7 +72,7 @@ export default function Schedule() {
                         <box-icon name="x"></box-icon>
                     </button>
                 </div>
-                <div className="event">
+                {/* <div className="event">
                     <div className="event-date-wrapper">
                         <div className="event-date">November 30, 2025</div>
                         <div className="event-time">10:00</div>
@@ -82,8 +82,8 @@ export default function Schedule() {
                         <box-icon type="solid" name="edit-alt"></box-icon>
                         <box-icon type="solid" name="message-alt-x"></box-icon>
                     </div>
+                </div> */}
                 </div>
-            </div>
             </div>
         </div>
     )
