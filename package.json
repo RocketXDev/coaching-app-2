@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "^14.2.15",
+    "boxicons": "^2.1.4",
     "firebase": "^10.14.1",
     "firebase-hooks": "^0.0.1",
     "firebaseui": "^6.1.0",
