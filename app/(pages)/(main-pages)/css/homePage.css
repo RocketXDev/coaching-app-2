@@ -1,0 +1,41 @@
+.content-wrapper {
+    display: grid;
+    gap: 30px;
+    grid-template: 'schedule schedule schedule schedule schedule'
+                   'history history history history students' ;
+    grid-template-rows: 200px 200px;
+    margin-left: 50%;
+    margin-top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.wrapper-profile {
+    grid-area: profile;
+}
+.wrapper-schedule {
+    grid-area: schedule;
+}
+.wrapper-history {
+    grid-area: history;
+}
+.wrapper-students {
+    grid-area: students;
+}
+
+.wrapper {
+    max-height: 400px;
+    background-color:rgba(51, 65, 85, 0.8);
+    color: lightgrey;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 400px;
+}
+
+.wrapper:hover {
+    box-shadow: 5px 5px 10px black;
+}
