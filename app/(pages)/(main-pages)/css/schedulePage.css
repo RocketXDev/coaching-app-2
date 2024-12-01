@@ -37,7 +37,7 @@
 .navigate-date {
     display: flex;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 15px;
     margin-left: 3px;
 }
 
@@ -55,6 +55,7 @@
 .buttons box-icon {
     width: 2.5rem;
     height: 2.5rem;
+    cursor: pointer;
 }
 
 .weekdays {
@@ -92,8 +93,8 @@
     border-bottom: 1px solid black;
 }
 
-#cur {
-    background-color: rgba(51, 65, 85);
+.current-day {
+    background-color: rgba(51, 65, 85) !important;
 }
 
 .events {

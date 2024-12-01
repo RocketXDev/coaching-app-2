@@ -2,61 +2,52 @@
 
 import 'boxicons';
 import "../css/schedulePage.css"
+import { useState } from 'react';
 
 export default function Schedule() {
+
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentDay = new Date();
+    const [currentMonth, setCurrentMonth] = useState(currentDay.getMonth());
+    const [currentYear, setCurrentYear] = useState(currentDay.getFullYear());
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    const [selectedDate, setSelectedDate] = useState(currentDay);
+
+    const prevMonth = () => {
+        setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth-1));
+        setCurrentYear((prevYear)=> (currentMonth === 0 ? prevYear - 1 : prevYear));
+    }
+
+    const nextMonth = () => {
+        setCurrentMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth+1));
+        setCurrentYear((prevYear)=> (currentMonth === 11 ? prevYear + 1 : prevYear));
+    }
+
     return (
         <div className="schedule-wrapper">
             <div className="calender-app">
                 <div className="calender">
                     <h1 className="heading">Schedule</h1>
                     <div className="navigate-date">
-                        <h2 className="month">November</h2>
-                        <h2 className="year">2024</h2>
+                        <h2 className="month">{monthsOfYear[currentMonth]}</h2>
+                        <h2 className="year">{currentYear}</h2>
                         <div className="buttons">
-                            <box-icon name="chevron-left"></box-icon>
-                            <box-icon name="chevron-right"></box-icon>
+                            <box-icon onClick={prevMonth} name="chevron-left"></box-icon>
+                            <box-icon onClick={nextMonth} name="chevron-right"></box-icon>
                         </div>
                     </div>
                     <div className='weekdays'>
-                        <span>Sun</span>
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
+                       {daysOfWeek.map((day) => <span key={day}>{day}</span>)}
                     </div>
                     <div className="days">
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>4</span>
-                        <span>5</span>
-                        <span>6</span>
-                        <span>7</span>
-                        <span>8</span>
-                        <span>9</span>
-                        <span>10</span>
-                        <span>11</span>
-                        <span>12</span>
-                        <span>13</span>
-                        <span id='cur'>14</span>
-                        <span>15</span>
-                        <span>16</span>
-                        <span>17</span>
-                        <span>18</span>
-                        <span>19</span>
-                        <span>20</span>
-                        <span>21</span>
-                        <span>22</span>
-                        <span>23</span>
-                        <span>24</span>
-                        <span>25</span>
-                        <span>26</span>
-                        <span>27</span>
-                        <span>28</span>
-                        <span>29</span>
-                        <span>30</span>
+                        {[...Array(firstDayOfMonth).keys()].map((_, index)=> (
+                        <span key={`empty-${index}`}/>
+                        ))}
+                        {[...Array(daysInMonth).keys()].map((day)=>(
+                            <span className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}</span>
+                        ))}
                     </div>
                 </div>
                 <div className="events">
