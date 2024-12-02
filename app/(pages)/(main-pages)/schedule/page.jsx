@@ -1,8 +1,12 @@
 "use client"
 
 import 'boxicons';
-import "../css/schedulePage.css"
 import { useState } from 'react';
+import DatePicker from "react-datepicker";
+import TimePicker from 'rsuite/TimePicker';
+import 'rsuite/TimePicker/styles/index.css';
+import "react-datepicker/dist/react-datepicker.css";
+import "../css/schedulePage.css";
 
 export default function Schedule() {
 
@@ -14,6 +18,7 @@ export default function Schedule() {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
     const [selectedDate, setSelectedDate] = useState(currentDay);
+    const [startDate, setStartDate] = useState(new Date());
 
     const prevMonth = () => {
         setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth-1));
@@ -46,34 +51,81 @@ export default function Schedule() {
                         <span key={`empty-${index}`}/>
                         ))}
                         {[...Array(daysInMonth).keys()].map((day)=>(
-                            <span className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}</span>
+                            <span className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
+                            <div className='event-wrapper'>
+                                <div className='event'>Dallas Classic</div>
+                                <div className='event'>Lesson with Nikolai</div>
+                            </div>
+                            <div className="event-extra">+ 3</div>
+                            </span>
                         ))}
                     </div>
                 </div>
                 <div className="events">
                 <div className="event-popup">
-                    <div className="time-input">
-                        <div className="event-popup-time">Time</div>
-                        <input className='hours' name = "hours" min={0} max={12} type="number" />
-                        <input className='minutes' name = "minutes" min={0} max={60} type="number" />
+                    <div className="event-title">
+                        <input placeholder='Title' type="text" name='title' />
                     </div>
-                    <textarea placeholder='Enter event text (Max. 60)'></textarea>
+                    <div className="event-date">
+                        <DatePicker wrapperClassName='date-picker-wrapper' selected={startDate} onChange={(date) => setStartDate(date)}/>
+                    </div>
+                    <div className="event-time">
+                        <div className="start-time">
+                            {/* <label>Start Time</label> */}
+                            <TimePicker
+                                showMeridiem="true"
+                                size='sm'
+                            />
+                        </div>
+                        <div className="end-time">
+                            {/* <label htmlFor='end-time'>End time</label> */}
+                            <TimePicker
+                                showMeridiem="true"
+                                size='sm'
+                            />
+                        </div>
+                    </div>
+                    <div className="event-repeat">
+                        <div className="repeat-qa">
+                            <label>Repeat?</label>
+                            <input type='checkbox'/>
+                        </div>
+                        <div className='repeat-dates'>
+                        <div className="rep-date">
+                                <label htmlFor="sun">Sun</label>
+                                <input type="checkbox" name='sun' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="mon">Mon</label>
+                                <input type="checkbox" name='mon' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="tue">Tue</label>
+                                <input type="checkbox" name='tue' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="wed">Wed</label>
+                                <input type="checkbox" name='wed' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="thu">Thu</label>
+                                <input type="checkbox" name='thu' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="fri">Fri</label>
+                                <input type="checkbox" name='fri' />
+                            </div>
+                            <div className="rep-date">
+                                <label htmlFor="sat">Sat</label>
+                                <input type="checkbox" name='sat' />
+                            </div>
+                        </div>
+                    </div>
                     <button className='event-popup-btn'>Add event</button>
                     <button className='close-event-popup'>
                         <box-icon name="x"></box-icon>
                     </button>
                 </div>
-                {/* <div className="event">
-                    <div className="event-date-wrapper">
-                        <div className="event-date">November 30, 2025</div>
-                        <div className="event-time">10:00</div>
-                    </div>
-                    <div className="event-text">Lesson with Sasha</div>
-                    <div className="event-buttons">
-                        <box-icon type="solid" name="edit-alt"></box-icon>
-                        <box-icon type="solid" name="message-alt-x"></box-icon>
-                    </div>
-                </div> */}
                 </div>
             </div>
         </div>

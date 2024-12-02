@@ -53,9 +53,7 @@ export default function MainLayout({ children }) {
           <div className="content">{children}</div>
         </> :
         <LoadingPage/>
-        }
-
-
+        } 
       </section>
   )
 

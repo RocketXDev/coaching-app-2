@@ -91,6 +91,7 @@
     background-color: rgba(51, 65, 85, 0.8);
     border-left: 1px solid black;
     border-bottom: 1px solid black;
+    position: relative;
 }
 
 .current-day {
@@ -104,14 +105,13 @@
     padding: 30px;
     border-radius: 10px;
     transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: rgba(0, 0, 0, 0.7);
-    height: 200px;
+    width: 500px;
+    background-color: rgb(42, 51, 64);
+    height: 500px;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.5);
-    display: none;
+    box-shadow: 2rem 2rem 5rem rgba(0, 0, 0, 0.5);
 }
 
 .event-popup {
@@ -131,6 +131,72 @@
 .event-popup-time {
     width: clamp(4rem, 4cqi, 7rem);
     color: white;
+}
+
+.event-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    font-size: 17px;
+    overflow: hidden;
+    gap: 2px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 115px;
+
+}
+.event {
+    white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: left;
+    border: 1px solid white;
+    padding: 0px 3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.event-extra {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.event-title {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px;
+    border-bottom: 2px solid rgba(211, 211, 211, 0.3);
+    font-size: 20px;
+}
+
+.event-title input {
+    outline: none;
+    background-color: inherit;
+    border: none;
+    color: lightgray;
+    font-size: 20px;
+    padding: 5px;
+    text-align: center;
+}
+
+.date-picker-wrapper .react-datepicker__input-container input {
+    height: 20px;
+    width: 200px;
+    padding: 5px;
+    text-align: center;
+}
+
+.event-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
 
 
