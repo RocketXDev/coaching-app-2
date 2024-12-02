@@ -71,14 +71,14 @@ export default function Schedule() {
                     </div>
                     <div className="event-time">
                         <div className="start-time">
-                            {/* <label>Start Time</label> */}
+                            <label>Start Time:</label>
                             <TimePicker
                                 showMeridiem="true"
                                 size='sm'
                             />
                         </div>
                         <div className="end-time">
-                            {/* <label htmlFor='end-time'>End time</label> */}
+                            <label htmlFor='end-time'>End time:</label>
                             <TimePicker
                                 showMeridiem="true"
                                 size='sm'

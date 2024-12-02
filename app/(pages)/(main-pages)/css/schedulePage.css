@@ -156,6 +156,7 @@
     padding: 0px 3px;
     cursor: pointer;
     width: 100%;
+    
 }
 
 .event-extra {
@@ -172,6 +173,7 @@
     gap: 30px;
     border-bottom: 2px solid rgba(211, 211, 211, 0.3);
     font-size: 20px;
+    transition: 0.5s all ease-in-out;
 }
 
 .event-title input {
@@ -179,9 +181,21 @@
     background-color: inherit;
     border: none;
     color: lightgray;
-    font-size: 20px;
+    font-size: 22px;
     padding: 5px;
     text-align: center;
+    transition: 0.5s all ease-in-out;
+}
+
+.event-title input:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+    transition: 0.5s all ease-in-out;
+    border-radius: 10px;
+}
+
+.event-title:hover {
+    border-radius: 10px;
+    transition: 0.5s all ease-in-out;
 }
 
 .date-picker-wrapper .react-datepicker__input-container input {
@@ -189,6 +203,20 @@
     width: 200px;
     padding: 5px;
     text-align: center;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid rgba(211, 211, 211, 0.3);
+    color: lightgray;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.5s all ease-in-out;
+}
+
+.date-picker-wrapper .react-datepicker__input-container input:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+    transition: 0.5s all ease-in-out;
+    border-radius: 10px;
 }
 
 .event-time {
@@ -198,5 +226,19 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.start-time, .end-time{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.start-time label, .end-time label {
+    font-size: 18px;
+}
+
+
 
 
