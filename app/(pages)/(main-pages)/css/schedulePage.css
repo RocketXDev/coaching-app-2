@@ -236,9 +236,71 @@
 }
 
 .start-time label, .end-time label {
-    font-size: 18px;
+    font-size: 20px;
 }
 
+.repeat-qa{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.repeat-dates input, .repeat-qa input {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.repeat-dates {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 10px;
+    left: 50%;
+    transform: translateX(-60%);
+    height: 100px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.rep-date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.event-add-btn {
+    min-width: 130px;
+    min-height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s all ease-in-out;
+}
+
+.event-add-btn:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+    color: white;
+    transition: 0.3s all ease-in-out;
+}
+
+.close-event-btn {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
 
 
 
