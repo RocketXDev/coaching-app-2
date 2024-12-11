@@ -22,6 +22,16 @@ export default function Schedule() {
     const [repeatDates, setRepeatDates] = useState(false);
     const [addEvent, setAddEvent] = useState(false);
 
+    const [lessonData, setLessonData] = useState({
+        title: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+        repeat: false,
+        repeatDays: []
+    });
+    const [lessonsArray, setLessonsArray] = useState([]);
+
     const prevMonth = () => {
         setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth-1));
         setCurrentYear((prevYear)=> (currentMonth === 0 ? prevYear - 1 : prevYear));

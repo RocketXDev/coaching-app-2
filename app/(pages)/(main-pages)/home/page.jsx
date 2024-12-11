@@ -1,6 +1,4 @@
 "use client"
-import {Coach, Student} from "../../../classes/classes"
-import { useEffect } from "react";
 import "../css/homePage.css"
 
 export default function Home() {
