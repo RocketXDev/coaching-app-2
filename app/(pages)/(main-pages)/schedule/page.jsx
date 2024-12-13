@@ -7,7 +7,7 @@ import TimePicker from 'rsuite/TimePicker';
 import 'rsuite/TimePicker/styles/index.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "../css/schedulePage.css";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import {auth, app} from '../../../firebase/config';
 
 export default function Schedule() {
@@ -24,7 +24,22 @@ export default function Schedule() {
             console.log(err);
         }
     }
+
+    const fetchData = async() => {
+
+        const docRef = collection(db, 'users', userUid, 'schedule');
+        const docSnap = await getDocs(docRef);
+
+        docSnap.forEach((doc) => {
+            console.log(doc.data().title)
+        })
+
+    }
     //
+
+    useEffect(() => {
+       fetchData();
+    }, [])
 
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -107,7 +122,7 @@ export default function Schedule() {
                         {[...Array(daysInMonth).keys()].map((day)=>(
                             <span onClick={() => handleAddEvent()} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
                             <div className='event-wrapper'>
-                                <div className='event'>Dallas Classic</div>
+                                <div className='event'></div>
                                 <div className='event'>Lesson with Nikolai</div>
                             </div>
                             <div className="event-extra">+ 3</div>
