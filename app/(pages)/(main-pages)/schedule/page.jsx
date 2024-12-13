@@ -18,12 +18,13 @@ export default function Schedule() {
 
     const sendData = async() => {
         try {
-            await addDoc(collection(db,'users', userUid, 'schedule'), lessonData);
+            await addDoc(collection(db,'users', userUid, 'schedule'),lessonData);
         } catch (err) {
             console.log("Error with DB connection (error to follow):")
             console.log(err);
         }
     }
+    //
 
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -57,8 +58,17 @@ export default function Schedule() {
         setCurrentYear((prevYear)=> (currentMonth === 11 ? prevYear + 1 : prevYear));
     }
 
+    const addDaysToRepeatDaysArray = (e) => {
+        setLessonData({...lessonData, repeatDays: [...lessonData.repeatDays, e.target.value]})
+    }
+
     const handleAddEvent = () => {
         setAddEvent(true);
+    }
+
+    const handleCloseEvent = () => {
+        setAddEvent(false); 
+        {repeatDates === true ? setRepeatDates(!repeatDates) : ""}
     }
     
     const handleSaveEvent = (e) => {
@@ -66,6 +76,7 @@ export default function Schedule() {
         try {
             sendData();
             setAddEvent(!addEvent);
+            {repeatDates === true ? setRepeatDates(!repeatDates) : ""}
         }
         catch(err) {
             console.log("Error with function calling DB (error to follow):")
@@ -140,31 +151,31 @@ export default function Schedule() {
                                 <div className='repeat-dates'>
                                     <div className="rep-date">
                                         <label htmlFor="sun">Sun</label>
-                                        <input type="checkbox" name='sun' />
+                                        <input value="Sun" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='sun' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="mon">Mon</label>
-                                        <input type="checkbox" name='mon' />
+                                        <input value="Mon" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='mon' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="tue">Tue</label>
-                                        <input type="checkbox" name='tue' />
+                                        <input value="Tue" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='tue' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="wed">Wed</label>
-                                        <input type="checkbox" name='wed' />
+                                        <input value="Wed" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='wed' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="thu">Thu</label>
-                                        <input type="checkbox" name='thu' />
+                                        <input value="Thu" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='thu' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="fri">Fri</label>
-                                        <input type="checkbox" name='fri' />
+                                        <input value="Fri" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='fri' />
                                     </div>
                                     <div className="rep-date">
                                         <label htmlFor="sat">Sat</label>
-                                        <input type="checkbox" name='sat' />
+                                        <input value="Sat" onChange={(e) => addDaysToRepeatDaysArray(e)} type="checkbox" name='sat' />
                                     </div>
                                 </div>
                                 :
@@ -172,7 +183,7 @@ export default function Schedule() {
                             }
                         </div>
                         <button onClick={(e) => handleSaveEvent(e)}className='event-add-btn'>Save</button>
-                        <button onClick={()=>{setAddEvent(false)}} className='close-event-btn'>
+                        <button onClick={()=>{handleCloseEvent()}} className='close-event-btn'>
                             <box-icon size="md" color="white" name="x"></box-icon>
                         </button>
                     </div>
