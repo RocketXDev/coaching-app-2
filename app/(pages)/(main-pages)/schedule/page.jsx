@@ -1,14 +1,29 @@
 "use client"
 
 import 'boxicons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
 import TimePicker from 'rsuite/TimePicker';
 import 'rsuite/TimePicker/styles/index.css';
 import "react-datepicker/dist/react-datepicker.css";
 import "../css/schedulePage.css";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {auth, app} from '../../../firebase/config';
 
 export default function Schedule() {
+
+    //DB Connection
+    const userUid = auth.currentUser.uid;
+    const db = getFirestore(app);
+
+    const sendData = async() => {
+        try {
+            await addDoc(collection(db,'users', userUid, 'schedule'), lessonData);
+        } catch (err) {
+            console.log("Error with DB connection (error to follow):")
+            console.log(err);
+        }
+    }
 
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -24,7 +39,7 @@ export default function Schedule() {
 
     const [lessonData, setLessonData] = useState({
         title: "",
-        date: "",
+        date: currentDay,
         startTime: "",
         endTime: "",
         repeat: false,
@@ -45,8 +60,18 @@ export default function Schedule() {
     const handleAddEvent = () => {
         setAddEvent(true);
     }
-
-    console.log(selectedDate);
+    
+    const handleSaveEvent = (e) => {
+        e.preventDefault;
+        try {
+            sendData();
+            setAddEvent(!addEvent);
+        }
+        catch(err) {
+            console.log("Error with function calling DB (error to follow):")
+            console.log(err);
+        }
+    }
 
     return (
         <div className="schedule-wrapper">
@@ -83,10 +108,10 @@ export default function Schedule() {
                 <div className="events">
                     <div className="event-popup">
                         <div className="event-title">
-                            <input placeholder='Title' type="text" name='title' />
+                            <input onChange={(e) => {setLessonData({...lessonData, title: e.target.value})}} placeholder='Title' type="text" name='title' />
                         </div>
                         <div className="event-date">
-                            <DatePicker wrapperClassName='date-picker-wrapper' selected={startDate}  onChange={(date) => setStartDate(date)}/>
+                            <DatePicker wrapperClassName='date-picker-wrapper' selected={startDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleDateString()})}}/>
                         </div>
                         <div className="event-time">
                             <div className="start-time">
@@ -94,6 +119,7 @@ export default function Schedule() {
                                 <TimePicker
                                     showMeridiem="true"
                                     size='sm'
+                                    onChange={(date) => {setLessonData({...lessonData, startTime: date.toLocaleTimeString()})}}
                                 />
                             </div>
                             <div className="end-time">
@@ -101,13 +127,14 @@ export default function Schedule() {
                                 <TimePicker
                                     showMeridiem="true"
                                     size='sm'
+                                    onChange={(date) => {setLessonData({...lessonData, endTime: date.toLocaleTimeString()})}}
                                 />
                             </div>
                         </div>
                         <div className="event-repeat">
                             <div className="repeat-qa">
                                 <label>Repeat?</label>
-                                <input onChange={()=>(setRepeatDates(!repeatDates))} type='checkbox'/>
+                                <input onChange={(e)=>{(setRepeatDates(!repeatDates)); setLessonData({...lessonData, repeat: !lessonData.repeat})}} type='checkbox'/>
                             </div>
                             {repeatDates ? 
                                 <div className='repeat-dates'>
@@ -144,7 +171,7 @@ export default function Schedule() {
                                 ""
                             }
                         </div>
-                        <button className='event-add-btn'>Save</button>
+                        <button onClick={(e) => handleSaveEvent(e)}className='event-add-btn'>Save</button>
                         <button onClick={()=>{setAddEvent(false)}} className='close-event-btn'>
                             <box-icon size="md" color="white" name="x"></box-icon>
                         </button>
