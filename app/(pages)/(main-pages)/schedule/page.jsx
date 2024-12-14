@@ -12,6 +12,26 @@ import {auth, app} from '../../../firebase/config';
 
 export default function Schedule() {
 
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const currentDay = new Date();
+    const [currentMonth, setCurrentMonth] = useState(currentDay.getMonth());
+    const [currentYear, setCurrentYear] = useState(currentDay.getFullYear());
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+    const [selectedDate, setSelectedDate] = useState();
+    const [startDate, setStartDate] = useState(new Date());
+    const [repeatDates, setRepeatDates] = useState(false);
+    const [addEvent, setAddEvent] = useState(false);
+    const [lessonData, setLessonData] = useState({
+        title: "",
+        date: currentDay,
+        startTime: "",
+        endTime: "",
+        repeat: false,
+        repeatDays: []
+    });
+
     //DB Connection
     const userUid = auth.currentUser.uid;
     const db = getFirestore(app);
@@ -25,43 +45,7 @@ export default function Schedule() {
         }
     }
 
-    const fetchData = async() => {
-
-        const docRef = collection(db, 'users', userUid, 'schedule');
-        const docSnap = await getDocs(docRef);
-
-        docSnap.forEach((doc) => {
-            console.log(doc.data().title)
-        })
-
-    }
     //
-
-    useEffect(() => {
-       fetchData();
-    }, [])
-
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const monthsOfYear = ["January","February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const currentDay = new Date();
-    const [currentMonth, setCurrentMonth] = useState(currentDay.getMonth());
-    const [currentYear, setCurrentYear] = useState(currentDay.getFullYear());
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-    const [selectedDate, setSelectedDate] = useState();
-    const [startDate, setStartDate] = useState(new Date());
-    const [repeatDates, setRepeatDates] = useState(false);
-    const [addEvent, setAddEvent] = useState(false);
-
-    const [lessonData, setLessonData] = useState({
-        title: "",
-        date: currentDay,
-        startTime: "",
-        endTime: "",
-        repeat: false,
-        repeatDays: []
-    });
-    const [lessonsArray, setLessonsArray] = useState([]);
 
     const prevMonth = () => {
         setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth-1));
@@ -122,10 +106,8 @@ export default function Schedule() {
                         {[...Array(daysInMonth).keys()].map((day)=>(
                             <span onClick={() => handleAddEvent()} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
                             <div className='event-wrapper'>
-                                <div className='event'></div>
-                                <div className='event'>Lesson with Nikolai</div>
+                                
                             </div>
-                            <div className="event-extra">+ 3</div>
                             </span>
                         ))}
                     </div>
