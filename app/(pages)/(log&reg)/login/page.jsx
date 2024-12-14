@@ -15,8 +15,7 @@ export default function Login() {
     const [errorCode, setErrorCode] = useState("");
     const [forgotPassword, setForgotPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState(false);
-    const [passwordIcon, setPasswordIcon] = useState(error ? 'password-icon' : 'password-icon-error');
+    const [passwordIcon, setPasswordIcon] = useState('password-icon');
     const router = useRouter();
 
     const handleLogin = () => {
@@ -27,7 +26,10 @@ export default function Login() {
         })
         .catch((error) => {
             setErrorCode(error.code);
-            console.log(errorCode);
+            if (errorCode === errorInvalidEmail){
+            } else {
+                setPasswordIcon('password-icon-error');
+            }
         })
     }
 
@@ -42,7 +44,6 @@ export default function Login() {
             })
             .catch((error) => {
                 setErrorCode(error.code);
-                setError(false);
                 console.log(errorCode);
             })
         }
