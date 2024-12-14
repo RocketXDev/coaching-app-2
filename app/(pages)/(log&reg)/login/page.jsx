@@ -1,7 +1,7 @@
 "use client";
 import "../auth.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
@@ -15,6 +15,8 @@ export default function Login() {
     const [errorCode, setErrorCode] = useState("");
     const [forgotPassword, setForgotPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState(false);
+    const [passwordIcon, setPasswordIcon] = useState(error ? 'password-icon' : 'password-icon-error');
     const router = useRouter();
 
     const handleLogin = () => {
@@ -40,6 +42,7 @@ export default function Login() {
             })
             .catch((error) => {
                 setErrorCode(error.code);
+                setError(false);
                 console.log(errorCode);
             })
         }
@@ -78,9 +81,9 @@ export default function Login() {
                         <div>
                             <label htmlFor="password">Password:</label>
                             <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
-                            <img onClick={()=>{setShowPassword(!showPassword)}} className="password-icon" src="/images/hide.png" alt="show-password-icon" />
+                            <img onClick={()=>{setShowPassword(!showPassword)}} className={passwordIcon} src="/images/hide.png" alt="show-password-icon" />
                         </div>
-                        {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
+                        {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ?  <div className="error-msg">Invalid Password</div> : ''}
                         <div className="password-info">
                             <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Forgot password?</a>
                         </div>

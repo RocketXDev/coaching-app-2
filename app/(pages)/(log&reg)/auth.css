@@ -173,6 +173,16 @@ input:focus {
     cursor: pointer;
 }
 
+.password-icon-error {
+    bottom: 64%!important;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 40px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 .password-icon-reg {
     bottom: 35%;
 }
