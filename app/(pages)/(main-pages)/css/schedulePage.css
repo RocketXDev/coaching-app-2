@@ -263,10 +263,11 @@
     column-gap: 20px;
     row-gap: 10px;
     left: 50%;
-    transform: translateX(-60%);
+    transform: translateX(-50%);
     height: 100px;
     font-size: 20px;
     margin-top: 20px;
+    width: 200px;
 }
 
 .rep-date {
