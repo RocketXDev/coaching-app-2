@@ -83,6 +83,18 @@ export default function Schedule() {
         }
     }
 
+    const handleDayClick = (day) => {
+        const clickedDay = new Date(currentYear, currentMonth, day);
+        const today = new Date();
+
+        if (today != clickedDay) {
+            setSelectedDate(clickedDay);
+        } else {
+            setSelectedDate(today);
+        }
+
+    }
+
     return (
         <div className="schedule-wrapper">
             <div className="calender-app">
@@ -92,8 +104,8 @@ export default function Schedule() {
                         <h2 className="month">{monthsOfYear[currentMonth]}</h2>
                         <h2 className="year">{currentYear}</h2>
                         <div className="buttons">
-                            <box-icon onClick={prevMonth} name="chevron-left"></box-icon>
-                            <box-icon onClick={nextMonth} name="chevron-right"></box-icon>
+                            <box-icon onClick={prevMonth} color="lightgrey" name="chevron-left"></box-icon>
+                            <box-icon onClick={nextMonth} color="lightgrey" name="chevron-right"></box-icon>
                         </div>
                     </div>
                     <div className='weekdays'>
@@ -104,10 +116,7 @@ export default function Schedule() {
                         <span key={`empty-${index}`}/>
                         ))}
                         {[...Array(daysInMonth).keys()].map((day)=>(
-                            <span onClick={() => handleAddEvent()} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
-                            <div className='event-wrapper'>
-                                
-                            </div>
+                            <span onClick={() => {handleAddEvent(); handleDayClick(day+1)}} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
                             </span>
                         ))}
                     </div>
@@ -119,7 +128,7 @@ export default function Schedule() {
                             <input onChange={(e) => {setLessonData({...lessonData, title: e.target.value})}} placeholder='Title' type="text" name='title' />
                         </div>
                         <div className="event-date">
-                            <DatePicker wrapperClassName='date-picker-wrapper' selected={startDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleDateString()})}}/>
+                            <DatePicker wrapperClassName='date-picker-wrapper' selected={selectedDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleDateString()})}}/>
                         </div>
                         <div className="event-time">
                             <div className="start-time">
