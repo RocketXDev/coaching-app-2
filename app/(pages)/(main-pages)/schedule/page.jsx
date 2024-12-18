@@ -31,6 +31,7 @@ export default function Schedule() {
         repeat: false,
         repeatDays: []
     });
+    const [lessons, setLessons] = useState([]);
 
     //DB Connection
     const userUid = auth.currentUser.uid;
@@ -94,6 +95,18 @@ export default function Schedule() {
         }
 
     }
+
+    const fetchData = async() => {
+        const collectionOfDocs = collection(db, 'users', userUid, 'schedule');
+        const docsSnap = await getDocs(collectionOfDocs);
+        docsSnap.forEach((doc) => {
+            console.log(doc.data());
+        })
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [])
 
     return (
         <div className="schedule-wrapper">

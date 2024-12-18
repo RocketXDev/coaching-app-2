@@ -5,7 +5,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword} from "firebase/auth";
 import {auth, app} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
-import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd} from "../error-codes";
+import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorMissingEmail} from "../error-codes";
 import { doc, setDoc, getFirestore, Timestamp } from "firebase/firestore"; 
 
 export default function Register() {
@@ -15,6 +15,7 @@ export default function Register() {
     const [userName, setUserName] = useState("");
     const [errorCode, setErrorCode] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [passwordIcon, setPasswordIcon] = useState('password-icon password-icon-reg');
     const router = useRouter();
     const db = getFirestore(app);
 
@@ -36,6 +37,11 @@ export default function Register() {
         })
         .catch((error) => {
             setErrorCode(error.code);
+            if (errorCode === errorExistingUser || errorCode === errorInvalidEmail || errorCode === errorMissingEmail) {
+                setPasswordIcon('password-icon password-icon-reg');
+            } else {
+                setPasswordIcon('password-icon password-icon-reg-err');
+            }
             console.log(errorCode);
         })
     }
@@ -59,7 +65,7 @@ export default function Register() {
                     <div>
                         <label htmlFor="password">Password:</label>
                         <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
-                        <img onClick={()=>{setShowPassword(!showPassword)}} className="password-icon password-icon-reg" src="/images/hide.png" alt="show-password-icon" />
+                        <img onClick={()=>{setShowPassword(!showPassword)}} className={passwordIcon} src="/images/hide.png" alt="show-password-icon" />
                     </div>
                     {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
                     <div className="login-info">

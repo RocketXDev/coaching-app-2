@@ -187,6 +187,10 @@ input:focus {
     bottom: 35%;
 }
 
+.password-icon-reg-err {
+    bottom: 47%;
+}
+
 /* AUTOCOMPLTE STYLES */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
