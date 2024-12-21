@@ -32,6 +32,8 @@ export default function Schedule() {
         repeatDays: []
     });
     const [lessons, setLessons] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [updState, setUpdState] = useState(true);
 
     //DB Connection
     const userUid = auth.currentUser.uid;
@@ -40,6 +42,7 @@ export default function Schedule() {
     const sendData = async() => {
         try {
             await addDoc(collection(db,'users', userUid, 'schedule'),lessonData);
+            setUpdState(!updState);
         } catch (err) {
             console.log("Error with DB connection (error to follow):")
             console.log(err);
@@ -95,18 +98,29 @@ export default function Schedule() {
         }
 
     }
+    
+    const isSameDay = (date1, date2) => {
+        return (
+            date1.getFullYear() === date2.getFullYear() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getDate() === date2.getDate()
+        )
+    }
 
     const fetchData = async() => {
         const collectionOfDocs = collection(db, 'users', userUid, 'schedule');
-        const docsSnap = await getDocs(collectionOfDocs);
+        let getLessonsFromFirestore = [];
+        const docsSnap = await getDocs(collectionOfDocs);     
         docsSnap.forEach((doc) => {
-            console.log(doc.data());
-        })
+            getLessonsFromFirestore.push({...doc.data(), id: doc.id})
+        });
+        setLessons(getLessonsFromFirestore);
+        setLoading(false);
     }
 
     useEffect(() => {
         fetchData();
-    }, [])
+    }, [loading, updState])
 
     return (
         <div className="schedule-wrapper">
@@ -129,7 +143,14 @@ export default function Schedule() {
                         <span key={`empty-${index}`}/>
                         ))}
                         {[...Array(daysInMonth).keys()].map((day)=>(
-                            <span onClick={() => {handleAddEvent(); handleDayClick(day+1)}} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}
+                            <span onClick={() => {handleAddEvent(); handleDayClick(day+1)}} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}                            
+                            <div className="event-wrapper">
+                                {lessons.map((lesson) => (
+                                    <div className="event">
+                                        <div className='title' key={lesson.id}>{lesson.title}</div>
+                                    </div>
+                                ))}
+                            </div> 
                             </span>
                         ))}
                     </div>
@@ -141,7 +162,7 @@ export default function Schedule() {
                             <input onChange={(e) => {setLessonData({...lessonData, title: e.target.value})}} placeholder='Title' type="text" name='title' />
                         </div>
                         <div className="event-date">
-                            <DatePicker wrapperClassName='date-picker-wrapper' selected={selectedDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleDateString()})}}/>
+                            <DatePicker wrapperClassName='date-picker-wrapper' selected={selectedDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleString()})}}/>
                         </div>
                         <div className="event-time">
                             <div className="start-time">
