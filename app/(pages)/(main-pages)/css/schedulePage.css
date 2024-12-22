@@ -155,7 +155,8 @@
     border: 1px solid white;
     padding: 0px 3px;
     cursor: pointer;
-    width: 100%;
+    max-width: 100%;
+    min-width: 93%;
     
 }
 
@@ -212,6 +213,8 @@
     font-size: 18px;
     transition: 0.5s all ease-in-out;
 }
+
+
 
 .date-picker-wrapper .react-datepicker__input-container input:hover {
     background-color: rgba(211, 211, 211, 0.3);

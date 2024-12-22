@@ -20,12 +20,11 @@ export default function Schedule() {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
     const [selectedDate, setSelectedDate] = useState();
-    const [startDate, setStartDate] = useState(new Date());
     const [repeatDates, setRepeatDates] = useState(false);
     const [addEvent, setAddEvent] = useState(false);
     const [lessonData, setLessonData] = useState({
         title: "",
-        date: currentDay,
+        date: new Date(),
         startTime: "",
         endTime: "",
         repeat: false,
@@ -93,6 +92,7 @@ export default function Schedule() {
 
         if (today != clickedDay) {
             setSelectedDate(clickedDay);
+            setLessonData({...lessonData, date: clickedDay})
         } else {
             setSelectedDate(today);
         }
@@ -101,9 +101,9 @@ export default function Schedule() {
     
     const isSameDay = (date1, date2) => {
         return (
-            date1.getFullYear() === date2.getFullYear() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getDate() === date2.getDate()
+            date1.toDate().getFullYear() === date2.getFullYear() &&
+            date1.toDate().getMonth() === date2.getMonth() &&
+            date1.toDate().getDate() === date2.getDate()
         )
     }
 
@@ -143,13 +143,18 @@ export default function Schedule() {
                         <span key={`empty-${index}`}/>
                         ))}
                         {[...Array(daysInMonth).keys()].map((day)=>(
-                            <span onClick={() => {handleAddEvent(); handleDayClick(day+1)}} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1}                            
+                            <span onClick={() => {handleAddEvent(); handleDayClick(day+1)}} className={(day + 1 === currentDay.getDate() && currentMonth === currentDay.getMonth() && currentYear === currentDay.getFullYear()) ? "current-day" : ""} key={day+1}>{day + 1} 
+                                                       
                             <div className="event-wrapper">
-                                {lessons.map((lesson) => (
-                                    <div className="event">
-                                        <div className='title' key={lesson.id}>{lesson.title}</div>
-                                    </div>
-                                ))}
+                            {lessons.map((lesson)=> {
+                                if (isSameDay(lesson.date, new Date(currentYear, currentMonth, day + 1))) {
+                                    return (
+                                        <div key={lesson.id} className='event'>
+                                            <div className="title">{lesson.title}</div>
+                                        </div>
+                                    )
+                                }
+                            })}
                             </div> 
                             </span>
                         ))}
@@ -162,7 +167,8 @@ export default function Schedule() {
                             <input onChange={(e) => {setLessonData({...lessonData, title: e.target.value})}} placeholder='Title' type="text" name='title' />
                         </div>
                         <div className="event-date">
-                            <DatePicker wrapperClassName='date-picker-wrapper' selected={selectedDate}  onChange={(date) => {setStartDate(date); setLessonData({...lessonData, date: date.toLocaleString()})}}/>
+                            <DatePicker wrapperClassName='date-picker-wrapper'
+                            selected={selectedDate} onChange={(date) => {setSelectedDate(date); setLessonData({...lessonData, date: date})}}/>
                         </div>
                         <div className="event-time">
                             <div className="start-time">
