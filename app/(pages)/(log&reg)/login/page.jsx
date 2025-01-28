@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import {auth} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
-import {errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorOther} from "../error-codes"
+import {errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorOther, errorMissingEmail} from "../error-codes";
+import Alert from "../../../components/Alert";
 
 
 export default function Login() {
@@ -13,6 +14,7 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorCode, setErrorCode] = useState("");
+    const [FBerrors, setFBerrors] = useState([errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorOther, errorMissingEmail])
     const [forgotPassword, setForgotPassword] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [passwordIcon, setPasswordIcon] = useState('password-icon');
@@ -26,11 +28,15 @@ export default function Login() {
         })
         .catch((error) => {
             setErrorCode(error.code);
-            if (errorCode === errorInvalidEmail){
-            } else {
-                setPasswordIcon('password-icon-error');
-            }
         })
+    }
+
+    const throwError = (errorMsg) => {
+        
+        return (
+            <Alert name={errorMsg}/>
+        )
+
     }
 
     const handleForgotPassword = () => {
@@ -66,6 +72,7 @@ export default function Login() {
     return (
         <div className="reg-main">
             <div className="form-container">
+            {(FBerrors.includes(errorCode)) ? throwError("Invalid Email or Password") : ""}
                 <div className="main-logo-login">
                     <img src="/images/logo_transparent.png" alt="logo" />
                 </div>
@@ -78,13 +85,11 @@ export default function Login() {
                             <label htmlFor="email">Email:</label>
                             <input value={email} onChange={(e) => {setEmail(e.target.value)}} id="email" name="email" type="email"></input>
                         </div>
-                        {errorCode === errorInvalidEmail ? <div className="error-msg">Invalid Email</div> : ""}
                         <div>
                             <label htmlFor="password">Password:</label>
                             <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
                             <img onClick={()=>{setShowPassword(!showPassword)}} className={passwordIcon} src="/images/hide.png" alt="show-password-icon" />
                         </div>
-                        {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ?  <div className="error-msg">Invalid Password</div> : ''}
                         <div className="password-info">
                             <a onClick={()=> {setForgotPassword(!forgotPassword)}} className="password-restore-link">Forgot password?</a>
                         </div>
