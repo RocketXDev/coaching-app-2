@@ -7,6 +7,7 @@ import {auth, app} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorMissingEmail} from "../error-codes";
 import { doc, setDoc, getFirestore, Timestamp } from "firebase/firestore"; 
+import Alert from "../../../components/Alert";
 
 export default function Register() {
 
@@ -29,21 +30,28 @@ export default function Register() {
     }
 
     const handleRegistration = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            createUserAccount(user.uid);
-            router.push('/home');
-        })
-        .catch((error) => {
-            setErrorCode(error.code);
-            if (errorCode === errorExistingUser || errorCode === errorInvalidEmail || errorCode === errorMissingEmail) {
-                setPasswordIcon('password-icon password-icon-reg');
-            } else {
-                setPasswordIcon('password-icon password-icon-reg-err');
-            }
-            console.log(errorCode);
-        })
+        if (userName != '') {
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                createUserAccount(user.uid);
+                router.push('/home');
+            })
+            .catch((error) => {
+                setErrorCode(error.code);
+                console.log(errorCode);
+            })
+        }
+    }
+
+    const throwError = (errorMsg) => {
+
+        return (
+            <div className="alert alert-reg">
+                <Alert name={errorMsg}/>
+            </div>
+        )
+
     }
 
     return (
@@ -51,35 +59,37 @@ export default function Register() {
                 <div className="main-logo-register">
                     <img src="/images/logo_transparent.png" alt="logo" />
                 </div>
-            <div className="form-container form-container-register">
-                <form>
-                <div>
-                        <label htmlFor="name">Name:</label>
-                        <input onChange={(e)=>{setUserName(e.target.value)}} value={userName} id="name" name="name" type="text"></input>
-                    </div>
+                {errorCode === errorExistingUser ? throwError("User with this email already exists") : ""}
+                {(errorCode === errorInvalidEmail || errorCode === errorMissingEmail) ? throwError("Invalid or missing email") : ""}
+                {userName === '' ? throwError("Name cannot be empty") : ""}
+                <div className="form-container form-container-register">
+                    <form>
                     <div>
-                        <label htmlFor="email">Email:</label>
-                        <input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
-                    </div>
-                    {(errorCode === errorExistingUser) ? <div className="error-msg">Invalid Email</div> : ""}
-                    <div>
-                        <label htmlFor="password">Password:</label>
-                        <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
-                        <img onClick={()=>{setShowPassword(!showPassword)}} className={passwordIcon} src="/images/hide.png" alt="show-password-icon" />
-                    </div>
-                    {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
-                    <div className="login-info">
-                        <button className="log_reg-button" onClick={()=>{handleRegistration()}} type="button"> Register</button>
-                        <div className="register-link">Already registered? 
-                                        <Link
-                                            href="/login"
-                                            className="link">
-                                            Login
-                                        </Link>
+                            <label htmlFor="name">Name:</label>
+                            <input onChange={(e)=>{setUserName(e.target.value)}} value={userName} id="name" name="name" type="text"></input>
                         </div>
-                    </div>
-                </form>
-            </div>
+                        <div>
+                            <label htmlFor="email">Email:</label>
+                            <input value={email} onChange={(e)=>{setEmail(e.target.value)}} id="email" name="email" type="email"></input>
+                        </div>
+                        <div>
+                            <label htmlFor="password">Password:</label>
+                            <input required value={password} onChange={(e)=>{setPassword(e.target.value)}} id="password" name="password" type={showPassword ? "text" : "password"}></input>
+                            <img onClick={()=>{setShowPassword(!showPassword)}} className={passwordIcon} src="/images/hide.png" alt="show-password-icon" />
+                        </div>
+                        {(errorCode === errorMissingPswd || errorCode === errorInvalidPswd) ? <div className="error-msg">Invalid Password</div> : ""}
+                        <div className="login-info">
+                            <button className="log_reg-button" onClick={()=>{handleRegistration()}} type="button"> Register</button>
+                            <div className="register-link">Already registered? 
+                                            <Link
+                                                href="/login"
+                                                className="link">
+                                                Login
+                                            </Link>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             <div className="background-img-register"></div>
         </div>
     )

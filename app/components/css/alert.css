@@ -1,19 +1,30 @@
 .alert {
     background-color: rgb(168, 84, 96);
-    width: 300px;
+    min-width: 300px;
     height: 40px;
     padding: 10px;
     display: flex;
+    flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    position: fixed;
     font-size: 20px;
     letter-spacing: 0.1cap;
     color: white;
-    top: 30px;
-    left: 25%;
-    transform: translateX(-50%);
     border-radius: 10px;
     z-index: 10;
     cursor: pointer;
+}
+
+.alert-reg {
+    position: fixed;
+    top: 30px;
+    transform: translateX(-50%);
+    left: 75%;
+}
+
+.alert-log {
+    position: fixed;
+    top: 30px;
+    transform: translateX(-50%);
+    left: 25%;
 }

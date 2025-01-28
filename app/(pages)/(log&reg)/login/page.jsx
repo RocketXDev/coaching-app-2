@@ -34,7 +34,9 @@ export default function Login() {
     const throwError = (errorMsg) => {
         
         return (
-            <Alert name={errorMsg}/>
+            <div className="alert alert-log">
+                <Alert name={errorMsg}/>
+            </div>
         )
 
     }
@@ -72,7 +74,7 @@ export default function Login() {
     return (
         <div className="reg-main">
             <div className="form-container">
-            {(FBerrors.includes(errorCode)) ? throwError("Invalid Email or Password") : ""}
+            {(FBerrors.includes(errorCode)) ? throwError("Invalid email or password") : ""}
                 <div className="main-logo-login">
                     <img src="/images/logo_transparent.png" alt="logo" />
                 </div>
