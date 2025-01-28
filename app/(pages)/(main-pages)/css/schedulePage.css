@@ -99,9 +99,9 @@
 }
 
 .events {
-    position: absolute;
+    position: fixed;
     top: 50%;
-    left: 50%;
+    left: 60%;
     padding: 30px;
     border-radius: 10px;
     transform: translate(-50%, -50%);
