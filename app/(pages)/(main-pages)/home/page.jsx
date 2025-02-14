@@ -1,6 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
-import "../css/homePage.css"
+import { useEffect, useState } from "react";
 
 export default function Home() {
 

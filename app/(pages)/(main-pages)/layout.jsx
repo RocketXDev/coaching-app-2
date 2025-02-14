@@ -2,11 +2,13 @@
 import Nav from "../../components/Nav";
 import localFont from "next/font/local"
 import "../../globals.css"
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import {auth, app} from '../../firebase/config'
 import { useRouter } from "next/navigation";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import LoadingPage from "../../components/LoadingPage";
+import "../(main-pages)/css/homePage.css";
+import "../(main-pages)/css/schedulePage.css";
 
 
 const geistSans = localFont({
@@ -48,10 +50,12 @@ export default function MainLayout({ children }) {
   return (
       <section>
         {loadPage ?
-        <>
-          <Nav name = {userName}/>
-          <div className="content">{children}</div>
-        </> :
+        <Suspense fallback = {<LoadingPage />}>
+          <>
+            <Nav name = {userName}/>
+            <div className="content">{children}</div>
+          </>
+        </Suspense> :
         <LoadingPage/>
         } 
       </section>

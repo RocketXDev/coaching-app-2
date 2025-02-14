@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import TimePicker from 'rsuite/TimePicker';
 import 'rsuite/TimePicker/styles/index.css';
 import "react-datepicker/dist/react-datepicker.css";
-import "../css/schedulePage.css";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import {auth, app} from '../../../firebase/config';
 

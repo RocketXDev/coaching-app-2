@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
-import "./globals.css"
+import LoadingPage from "./components/LoadingPage";
+import "./globals.css";
+import { Suspense } from "react";
 
 export const metadata = {
   title: 'Next.js',
@@ -22,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <div>{children}</div>
+        <Suspense fallback={<LoadingPage/>}><div>{children}</div></Suspense>
       </body>
     </html>
   )
