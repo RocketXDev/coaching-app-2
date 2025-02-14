@@ -3,12 +3,14 @@ import { Suspense, useEffect, useState } from "react";
 import { auth, app } from "../../../firebase/config";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
 import LoadingPage from "../../../components/LoadingPage";
+import AddStudentWindow from "../../../components/AddStudentWindow";
 
 export default function Home() {
 
     const [students, setStudents] = useState([]);
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [displayAddStudent, setDisplayAddStudent] = useState(false);
 
     //TEMPORARY
     const [dammyState, setDammyState] = useState(false);
@@ -50,7 +52,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="dashboard-block dash-students">
-                    <div className="dash-block-title">Students</div>
+                    <div className="dash-block-title" onClick={() => setDisplayAddStudent(true)}>Students</div>
                     <div className="dash-block-main">
                         {loading ? "Loading students..." : 
                         <>
@@ -89,6 +91,7 @@ export default function Home() {
                     }
                     </div>
                 </div>
+                {displayAddStudent ? <AddStudentWindow/> : ""}
             </div>
         </>
     )

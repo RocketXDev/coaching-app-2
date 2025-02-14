@@ -179,7 +179,7 @@
     transition: 0.5s all ease-in-out;
 }
 
-.event-title input {
+.event-title > input {
     outline: none;
     background-color: inherit;
     border: none;
@@ -190,7 +190,7 @@
     transition: 0.5s all ease-in-out;
 }
 
-.event-title input:hover {
+.event-title > input:hover {
     background-color: rgba(211, 211, 211, 0.3);
     transition: 0.5s all ease-in-out;
     border-radius: 10px;
@@ -201,7 +201,7 @@
     transition: 0.5s all ease-in-out;
 }
 
-.date-picker-wrapper .react-datepicker__input-container input {
+.date-picker-wrapper .react-datepicker__input-container > input {
     height: 20px;
     width: 200px;
     padding: 5px;
@@ -218,7 +218,7 @@
 
 
 
-.date-picker-wrapper .react-datepicker__input-container input:hover {
+.date-picker-wrapper .react-datepicker__input-container > input:hover {
     background-color: rgba(211, 211, 211, 0.3);
     transition: 0.5s all ease-in-out;
     border-radius: 10px;
@@ -252,7 +252,7 @@
     gap: 10px;
 }
 
-.repeat-dates input, .repeat-qa input {
+.repeat-dates > input, .repeat-qa > input {
     cursor: pointer;
     width: 18px;
     height: 18px;
