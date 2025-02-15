@@ -1,9 +1,10 @@
 "use client"
-import { Suspense, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { auth, app } from "../../../firebase/config";
 import { getFirestore, getDocs, collection } from "firebase/firestore";
-import LoadingPage from "../../../components/LoadingPage";
-import AddStudentWindow from "../../../components/AddStudentWindow";
+import 'boxicons';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input/input';
 
 export default function Home() {
 
@@ -11,6 +12,24 @@ export default function Home() {
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [displayAddStudent, setDisplayAddStudent] = useState(false);
+    const [studentData, setStudentData] = useState({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        parent: {
+            name: "",
+            phoneNumber: "",
+            email: ""
+        },
+        discipline: "",
+        partner: {
+            name: "",
+            phoneNumber: "",
+            email: ""
+        }
+    });
+    const [studentPhoneNumber, setStudentPhoneNumber] = useState();
+    const [parentNeeded, setParentNeeded] = useState(false);
 
     //TEMPORARY
     const [dammyState, setDammyState] = useState(false);
@@ -18,7 +37,11 @@ export default function Home() {
     useEffect(() => {
         setDammyState(!dammyState);
         fetchData();
-    }, [students, lessons])
+    }, [students, lessons]);
+
+    useEffect(() => {
+
+    }, [parentNeeded])
 
     const userUid = auth.currentUser.uid;
     const db = getFirestore(app);
@@ -39,6 +62,41 @@ export default function Home() {
         setLessons(getLessonsFromFirestore);
         setStudents(getStudentsFromFirestore);
         setLoading(false);
+    }
+
+    const addStudentPopup = () => {
+
+        return (
+            <div className="add-popup">
+                <div className="form-wrapper">
+                    <div className="student-name">
+                        <input onChange={(e) => {setStudentData({...studentData, name: e.target.value})}} placeholder='Athlete name' type="text"  />
+                    </div>
+                    <div className="student-email">
+                        <input onChange={(e) => {setStudentData({...studentData, email: e.target.value})}} placeholder='Athlete email' type="email"  />
+                    </div>
+                    <div className="student-number">
+                        <PhoneInput
+                            placeholder="Athlete phone number"
+                            country="US"
+                            value={studentPhoneNumber}
+                            onChange={setStudentPhoneNumber}
+                        />
+                    </div>
+                    {/* <div className="age-verification"> Under 18?
+                        <div className="age-option">
+                            <input onChange={(e) => {setParentNeeded(e.target.value)}} name="age-verify" value={true} type="checkbox"/> Yes
+                        </div>
+                    </div> */}
+                    
+                    {parentNeeded ? <div className = "parent-wrapper">Hello</div>:""}
+
+                    <button onClick={()=>{setDisplayAddStudent(false)}} className='close-popup-btn'>
+                            <box-icon size="md" color="white" name="x"></box-icon>
+                    </button>
+                </div>
+            </div>
+        )
     }
 
     return (
@@ -91,7 +149,7 @@ export default function Home() {
                     }
                     </div>
                 </div>
-                {displayAddStudent ? <AddStudentWindow/> : ""}
+                {displayAddStudent ? addStudentPopup() : ""}
             </div>
         </>
     )

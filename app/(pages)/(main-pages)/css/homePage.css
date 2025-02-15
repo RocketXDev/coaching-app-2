@@ -88,3 +88,85 @@
     transition: 0.2s all ease-in-out;
     background-color: rgb(37, 46, 59, 0.8)
 }
+
+.add-popup {
+    position: absolute;
+    width: 500px;
+    min-height: 500px;
+    background-color: rgb(42, 51, 64);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: lightgray;
+    gap: 30px;
+}
+
+.student-name, .student-email, .student-number {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-bottom: 2px solid rgba(211, 211, 211, 0.3);
+    font-size: 20px;
+    transition: 1s all ease-in-out;
+}
+
+.student-name > input, .student-email > input, .student-number > input  {
+    outline: none;
+    background-color: inherit;
+    border: none;
+    color: lightgray;
+    font-size: 22px;
+    padding: 5px;
+    text-align: left;
+    transition: 0.5s all ease-in-out;
+}
+
+.student-name > input:hover, .student-email > input:hover, .student-number > input:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+    transition: 0.5s all ease-in-out;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.close-popup-btn {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.age-verification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    font-size: 22px;
+    color: lightgray;
+    padding: 5px;
+    text-align: left;
+    gap: 20px;
+}
+
+.age-option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    flex-direction: row;
+}
+
+.age-option > input {
+    cursor: pointer;
+}
