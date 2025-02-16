@@ -30,7 +30,7 @@ export default function Home() {
     });
     const [studentPhoneNumber, setStudentPhoneNumber] = useState();
     const [parentNeeded, setParentNeeded] = useState(false);
-    const [discipline, setDiscipline] = useState("single");
+    const [disciplinePrompt, setDisciplinePrompt] = useState("single");
 
     //TEMPORARY
     const [dammyState, setDammyState] = useState(false);
@@ -67,6 +67,11 @@ export default function Home() {
 
     const addStudentPopup = () => {
 
+        const addDiscipline = (e) => {
+            setDisciplinePrompt(e.target.value);
+            setStudentData({...studentData, discipline: {disciplinePrompt}})
+        }
+
         return (
             <div className="add-popup">
                 <div className="form-wrapper">
@@ -87,7 +92,7 @@ export default function Home() {
                     </div>
                     <div className="age-verification"> Under 18?
                         <div className="age-option">
-                            <input onChange={(e) => {setParentNeeded(!parentNeeded)}} name="age-verify" value={parentNeeded} type="checkbox"/> Yes
+                            <input onChange={() => setParentNeeded(!parentNeeded)} name="age-verify" value={parentNeeded} type="checkbox"/> Yes
                         </div>
                     </div>
                     
@@ -96,14 +101,14 @@ export default function Home() {
                     :
                     ""}
 
-                    <select onChange={(e) => {setDiscipline(e.target.value)}} className="discipline">
+                    <select onChange={(e) => addDiscipline(e)} className="discipline">
                         <option value="single">Single</option>
                         <option value="ice dance">Ice Dance</option>
                         <option value="solo ice dance">Solo Ice Dance</option>
                         <option value="pairs">Pairs</option>
                     </select>
 
-                    {discipline === "ice dance" || discipline === "pairs" ?
+                    {disciplinePrompt === "ice dance" || disciplinePrompt === "pairs" ?
                     <div className="additional-wrapper">Partner information</div>
                     :
                     ""}
