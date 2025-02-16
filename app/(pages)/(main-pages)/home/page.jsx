@@ -30,6 +30,7 @@ export default function Home() {
     });
     const [studentPhoneNumber, setStudentPhoneNumber] = useState();
     const [parentNeeded, setParentNeeded] = useState(false);
+    const [discipline, setDiscipline] = useState("single");
 
     //TEMPORARY
     const [dammyState, setDammyState] = useState(false);
@@ -69,6 +70,7 @@ export default function Home() {
         return (
             <div className="add-popup">
                 <div className="form-wrapper">
+                    <div className="add-popup-title">Student Info</div>
                     <div className="student-name">
                         <input onChange={(e) => {setStudentData({...studentData, name: e.target.value})}} placeholder='Athlete name' type="text"  />
                     </div>
@@ -83,13 +85,28 @@ export default function Home() {
                             onChange={setStudentPhoneNumber}
                         />
                     </div>
-                    {/* <div className="age-verification"> Under 18?
+                    <div className="age-verification"> Under 18?
                         <div className="age-option">
-                            <input onChange={(e) => {setParentNeeded(e.target.value)}} name="age-verify" value={true} type="checkbox"/> Yes
+                            <input onChange={(e) => {setParentNeeded(!parentNeeded)}} name="age-verify" value={parentNeeded} type="checkbox"/> Yes
                         </div>
-                    </div> */}
+                    </div>
                     
-                    {parentNeeded ? <div className = "parent-wrapper">Hello</div>:""}
+                    {parentNeeded ? 
+                    <div className = "additional-wrapper">Parent information</div>
+                    :
+                    ""}
+
+                    <select onChange={(e) => {setDiscipline(e.target.value)}} className="discipline">
+                        <option value="single">Single</option>
+                        <option value="ice dance">Ice Dance</option>
+                        <option value="solo ice dance">Solo Ice Dance</option>
+                        <option value="pairs">Pairs</option>
+                    </select>
+
+                    {discipline === "ice dance" || discipline === "pairs" ?
+                    <div className="additional-wrapper">Partner information</div>
+                    :
+                    ""}
 
                     <button onClick={()=>{setDisplayAddStudent(false)}} className='close-popup-btn'>
                             <box-icon size="md" color="white" name="x"></box-icon>

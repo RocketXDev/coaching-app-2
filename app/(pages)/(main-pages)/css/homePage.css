@@ -127,8 +127,8 @@
     color: lightgray;
     font-size: 22px;
     padding: 5px;
-    text-align: left;
     transition: 0.5s all ease-in-out;
+    text-align: center;
 }
 
 .student-name > input:hover, .student-email > input:hover, .student-number > input:hover {
@@ -163,10 +163,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3px;
+    gap: 6px;
     flex-direction: row;
+    font-size: 22px;
 }
 
 .age-option > input {
     cursor: pointer;
+    font-size: 45px;
+}
+
+.add-popup-title {
+    font-size: 35px;
 }
