@@ -108,10 +108,10 @@
     justify-content: center;
     align-items: center;
     color: lightgray;
-    gap: 30px;
+    gap: 20px;
 }
 
-.student-name, .student-email, .student-number {
+.form-name, .form-email, .form-number{
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -120,7 +120,7 @@
     transition: 1s all ease-in-out;
 }
 
-.student-name > input, .student-email > input, .student-number > input  {
+.form-name > input, .form-email > input, .form-number > input  {
     outline: none;
     background-color: inherit;
     border: none;
@@ -131,7 +131,7 @@
     text-align: center;
 }
 
-.student-name > input:hover, .student-email > input:hover, .student-number > input:hover {
+.form-name > input:hover, .form-email > input:hover, .form-number > input:hover {
     background-color: rgba(211, 211, 211, 0.3);
     transition: 0.5s all ease-in-out;
     border-top-right-radius: 5px;
@@ -152,7 +152,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    font-size: 22px;
+    font-size: 23px;
     color: lightgray;
     padding: 5px;
     text-align: left;
@@ -165,7 +165,7 @@
     align-items: center;
     gap: 6px;
     flex-direction: row;
-    font-size: 22px;
+    font-size: 23px;
 }
 
 .age-option > input {
@@ -175,4 +175,36 @@
 
 .add-popup-title {
     font-size: 35px;
+}
+
+.discipline-title {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 23px;
+    transition: 1s all ease-in-out;
+}
+
+select {
+    font-size: 16px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3px;
+    background-color: rgb(42, 51, 64);
+    color: lightgray;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-appearance: lightgray;
+}
+
+.additional-info-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }

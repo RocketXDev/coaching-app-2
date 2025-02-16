@@ -21,7 +21,7 @@ export default function Home() {
             phoneNumber: "",
             email: ""
         },
-        discipline: "",
+        discipline: "single",
         partner: {
             name: "",
             phoneNumber: "",
@@ -29,8 +29,8 @@ export default function Home() {
         }
     });
     const [studentPhoneNumber, setStudentPhoneNumber] = useState();
+    const [parentPhoneNumber, setParentPhoneNumber] = useState();
     const [parentNeeded, setParentNeeded] = useState(false);
-    const [disciplinePrompt, setDisciplinePrompt] = useState("single");
 
     //TEMPORARY
     const [dammyState, setDammyState] = useState(false);
@@ -65,24 +65,26 @@ export default function Home() {
         setLoading(false);
     }
 
-    const addStudentPopup = () => {
+    const closeAddStudentPopup = () => {
+        setDisplayAddStudent(false);
+        setStudentData({...studentData, discipline:"single"});
+        setParentNeeded(false);
 
-        const addDiscipline = (e) => {
-            setDisciplinePrompt(e.target.value);
-            setStudentData({...studentData, discipline: {disciplinePrompt}})
-        }
+    }
+
+    const addStudentPopup = () => {
 
         return (
             <div className="add-popup">
                 <div className="form-wrapper">
                     <div className="add-popup-title">Student Info</div>
-                    <div className="student-name">
+                    <div className="form-name">
                         <input onChange={(e) => {setStudentData({...studentData, name: e.target.value})}} placeholder='Athlete name' type="text"  />
                     </div>
-                    <div className="student-email">
+                    <div className="form-email">
                         <input onChange={(e) => {setStudentData({...studentData, email: e.target.value})}} placeholder='Athlete email' type="email"  />
                     </div>
-                    <div className="student-number">
+                    <div className="form-number">
                         <PhoneInput
                             placeholder="Athlete phone number"
                             country="US"
@@ -97,23 +99,40 @@ export default function Home() {
                     </div>
                     
                     {parentNeeded ? 
-                    <div className = "additional-wrapper">Parent information</div>
+                    <div className = "additional-info-wrapper">
+                        <div className="form-name">
+                            <input onChange={(e) => {setStudentData({...studentData, parent: {...studentData.parent, name: e.target.value}})}} placeholder='Parent name' type="text"  />
+                        </div>
+                        <div className="form-email">
+                            <input onChange={(e) => {setStudentData({...studentData, parent: {...studentData.parent, email: e.target.value}})}} placeholder='Parent email' type="email"  />
+                        </div>
+                        <div className="form-number">
+                            <PhoneInput
+                                placeholder="Parent phone number"
+                                country="US"
+                                value={parentPhoneNumber}
+                                onChange={setParentPhoneNumber}
+                            />
+                        </div>
+                    </div>
                     :
                     ""}
+                    
+                    <label className="discipline-title" htmlFor="discipline">Discipline:
+                        <select name="discipline" onChange={(e) => setStudentData({...studentData, discipline: e.target.value})} className="discipline">
+                            <option value="single">Single</option>
+                            <option value="ice dance">Ice Dance</option>
+                            <option value="solo ice dance">Solo Ice Dance</option>
+                            <option value="pairs">Pairs</option>
+                        </select>
+                    </label>
 
-                    <select onChange={(e) => addDiscipline(e)} className="discipline">
-                        <option value="single">Single</option>
-                        <option value="ice dance">Ice Dance</option>
-                        <option value="solo ice dance">Solo Ice Dance</option>
-                        <option value="pairs">Pairs</option>
-                    </select>
-
-                    {disciplinePrompt === "ice dance" || disciplinePrompt === "pairs" ?
+                    {studentData.discipline === "ice dance" || studentData.discipline === "pairs" ?
                     <div className="additional-wrapper">Partner information</div>
                     :
                     ""}
 
-                    <button onClick={()=>{setDisplayAddStudent(false)}} className='close-popup-btn'>
+                    <button onClick={()=>{closeAddStudentPopup()}} className='close-popup-btn'>
                             <box-icon size="md" color="white" name="x"></box-icon>
                     </button>
                 </div>
