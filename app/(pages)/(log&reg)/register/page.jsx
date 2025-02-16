@@ -2,7 +2,7 @@
 import Link from "next/link";
 import "../auth.css";
 import { useState } from "react";
-import { createUserWithEmailAndPassword} from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import {auth, app} from "../../../firebase/config";
 import { useRouter } from "next/navigation";
 import {errorExistingUser, errorInvalidPswd, errorInvalidEmail, errorMissingPswd, errorMissingEmail} from "../error-codes";
@@ -33,6 +33,7 @@ export default function Register() {
         if (userName != '') {
             createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                sendEmailVerification(auth.currentUser);
                 const user = userCredential.user;
                 createUserAccount(user.uid);
                 router.push('/home');

@@ -28,9 +28,9 @@ export default function Home() {
             email: ""
         }
     });
-    const [studentPhoneNumber, setStudentPhoneNumber] = useState();
-    const [parentPhoneNumber, setParentPhoneNumber] = useState();
-    const [partnerPhoneNumber, setPartnerPhoneNumber] = useState();
+    const [studentPhoneNumber, setStudentPhoneNumber] = useState("");
+    const [parentPhoneNumber, setParentPhoneNumber] = useState("");
+    const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
     const [parentNeeded, setParentNeeded] = useState(false);
 
     //TEMPORARY
