@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState } from "react";
 import { auth, app } from "../../../firebase/config";
-import { getFirestore, getDocs, collection, addDoc } from "firebase/firestore";
+import { getFirestore, getDocs, collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 import 'boxicons';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input/input';
@@ -60,6 +60,7 @@ export default function Home() {
         setLessons(getLessonsFromFirestore);
         setStudents(getStudentsFromFirestore);
         setLoading(false);
+        console.log(students);
     }
 
     const closeAddStudentPopup = () => {
@@ -94,6 +95,10 @@ export default function Home() {
 
         setDisplayAddStudent(false);
 
+    }
+
+    const deleteStudent = async(studentId) => {
+        await deleteDoc(doc(db, 'users', userUid, 'students', studentId))
     }
 
     const addStudentPopup = () => {
@@ -199,7 +204,10 @@ export default function Home() {
                             {(students.length > 0) ? 
                                 <div className="data">
                                     {students.map((student) => {
-                                        return (<div className="dash-block-data">{student.name}</div>);
+                                        return (
+                                        <div className="dash-block-data">{student.name}
+                                            <img onClick={() => deleteStudent(student.id)} className="data-logo-delete" src="/images/delete.png"></img>
+                                        </div>);
                                     })}
                                 </div>:
                                 <>

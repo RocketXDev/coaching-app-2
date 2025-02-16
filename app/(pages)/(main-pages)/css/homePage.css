@@ -61,6 +61,16 @@
     border-radius: 10px;
     padding: 10px;
     font-size: 20px;
+    position: relative;
+}
+
+.data-logo-delete {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .dash-block-data:hover {
@@ -225,3 +235,4 @@ select {
     color: white;
     transition: 0.3s all ease-in-out;
 }
+
