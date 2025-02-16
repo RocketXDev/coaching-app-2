@@ -92,7 +92,7 @@
 .add-popup {
     position: absolute;
     width: 500px;
-    min-height: 500px;
+    min-height: 400px;
     background-color: rgb(42, 51, 64);
     top: 50%;
     left: 50%;
@@ -207,4 +207,21 @@ select {
     align-items: center;
     flex-direction: column;
     gap: 20px;
+}
+
+.form-add-btn {
+    min-width: 130px;
+    min-height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s all ease-in-out;
+}
+
+.form-add-btn:hover {
+    background-color: rgba(211, 211, 211, 0.3);
+    color: white;
+    transition: 0.3s all ease-in-out;
 }

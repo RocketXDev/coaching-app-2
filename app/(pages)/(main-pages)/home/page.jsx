@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState } from "react";
 import { auth, app } from "../../../firebase/config";
-import { getFirestore, getDocs, collection } from "firebase/firestore";
+import { getFirestore, getDocs, collection, addDoc } from "firebase/firestore";
 import 'boxicons';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input/input';
@@ -30,6 +30,7 @@ export default function Home() {
     });
     const [studentPhoneNumber, setStudentPhoneNumber] = useState();
     const [parentPhoneNumber, setParentPhoneNumber] = useState();
+    const [partnerPhoneNumber, setPartnerPhoneNumber] = useState();
     const [parentNeeded, setParentNeeded] = useState(false);
 
     //TEMPORARY
@@ -39,10 +40,6 @@ export default function Home() {
         setDammyState(!dammyState);
         fetchData();
     }, [students, lessons]);
-
-    useEffect(() => {
-
-    }, [parentNeeded])
 
     const userUid = auth.currentUser.uid;
     const db = getFirestore(app);
@@ -69,6 +66,33 @@ export default function Home() {
         setDisplayAddStudent(false);
         setStudentData({...studentData, discipline:"single"});
         setParentNeeded(false);
+
+    }
+
+    const openAddStudentPopup = () => {
+        setDisplayAddStudent(true);
+    }
+
+    const saveStudent = async() => {
+
+        const docRef = await addDoc(collection(db, 'users', userUid, "students"), {
+            name: studentData.name,
+            email: studentData.email,
+            phoneNumber: studentPhoneNumber,
+            parent: {
+                name: studentData.parent.name,
+                phoneNumber: parentPhoneNumber,
+                email: studentData.parent.email
+            },
+            discipline: studentData.discipline,
+            partner: {
+                name: studentData.partner.name,
+                phoneNumber: partnerPhoneNumber,
+                email: studentData.partner.email
+            }
+        });
+
+        setDisplayAddStudent(false);
 
     }
 
@@ -128,9 +152,26 @@ export default function Home() {
                     </label>
 
                     {studentData.discipline === "ice dance" || studentData.discipline === "pairs" ?
-                    <div className="additional-wrapper">Partner information</div>
+                    <div className = "additional-info-wrapper">
+                        <div className="form-name">
+                            <input onChange={(e) => {setStudentData({...studentData, partner: {...studentData.partner, name: e.target.value}})}} placeholder='Partner name' type="text"  />
+                        </div>
+                        <div className="form-email">
+                            <input onChange={(e) => {setStudentData({...studentData, partner: {...studentData.partner, email: e.target.value}})}} placeholder='Partner email' type="email"  />
+                        </div>
+                        <div className="form-number">
+                            <PhoneInput
+                                placeholder="Partner phone number"
+                                country="US"
+                                value={partnerPhoneNumber}
+                                onChange={setPartnerPhoneNumber}
+                            />
+                        </div>
+                    </div>
                     :
                     ""}
+
+                    <button onClick={() => saveStudent()} className="form-add-btn">Save</button>
 
                     <button onClick={()=>{closeAddStudentPopup()}} className='close-popup-btn'>
                             <box-icon size="md" color="white" name="x"></box-icon>
@@ -151,7 +192,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="dashboard-block dash-students">
-                    <div className="dash-block-title" onClick={() => setDisplayAddStudent(true)}>Students</div>
+                    <div className="dash-block-title" onClick={() => openAddStudentPopup()}>Students</div>
                     <div className="dash-block-main">
                         {loading ? "Loading students..." : 
                         <>
@@ -163,7 +204,7 @@ export default function Home() {
                                 </div>:
                                 <>
                                     <div className="empty-msg">No students yet...</div>
-                                    <div className="add-data">+</div>
+                                    <div onClick={() => openAddStudentPopup()} className="add-data">+</div>
                                 </>
                             }
                         </>
