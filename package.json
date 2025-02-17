@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "^14.2.15",
+    "@supabase/supabase-js": "^2.48.1",
     "boxicons": "^2.1.4",
     "firebase": "^10.14.1",
     "firebase-hooks": "^0.0.1",
