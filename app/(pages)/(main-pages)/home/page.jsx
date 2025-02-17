@@ -33,11 +33,7 @@ export default function Home() {
     const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
     const [parentNeeded, setParentNeeded] = useState(false);
 
-    //TEMPORARY
-    const [dammyState, setDammyState] = useState(false);
-
     useEffect(() => {
-        setDammyState(!dammyState);
         fetchData();
     }, [students, lessons]);
 
