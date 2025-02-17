@@ -90,6 +90,8 @@ export default function Home() {
         });
 
         setDisplayAddStudent(false);
+        setStudentData({...studentData, discipline:"single"});
+        setParentNeeded(false);
 
     }
 
@@ -107,7 +109,7 @@ export default function Home() {
                         <input onChange={(e) => {setStudentData({...studentData, name: e.target.value})}} placeholder='Athlete name' type="text"  />
                     </div>
                     <div className="form-email">
-                        <input onChange={(e) => {setStudentData({...studentData, email: e.target.value})}} placeholder='Athlete email' type="email"  />
+                        <input onChange={(e) => {setStudentData({...studentData, email: e.target.value})}} placeholder='Athlete email' type="text"  />
                     </div>
                     <div className="form-number">
                         <PhoneInput
@@ -129,7 +131,7 @@ export default function Home() {
                             <input onChange={(e) => {setStudentData({...studentData, parent: {...studentData.parent, name: e.target.value}})}} placeholder='Parent name' type="text"  />
                         </div>
                         <div className="form-email">
-                            <input onChange={(e) => {setStudentData({...studentData, parent: {...studentData.parent, email: e.target.value}})}} placeholder='Parent email' type="email"  />
+                            <input onChange={(e) => {setStudentData({...studentData, parent: {...studentData.parent, email: e.target.value}})}} placeholder='Parent email' type="text"  />
                         </div>
                         <div className="form-number">
                             <PhoneInput
@@ -158,7 +160,7 @@ export default function Home() {
                             <input onChange={(e) => {setStudentData({...studentData, partner: {...studentData.partner, name: e.target.value}})}} placeholder='Partner name' type="text"  />
                         </div>
                         <div className="form-email">
-                            <input onChange={(e) => {setStudentData({...studentData, partner: {...studentData.partner, email: e.target.value}})}} placeholder='Partner email' type="email"  />
+                            <input onChange={(e) => {setStudentData({...studentData, partner: {...studentData.partner, email: e.target.value}})}} placeholder='Partner email' type="text"  />
                         </div>
                         <div className="form-number">
                             <PhoneInput
