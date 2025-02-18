@@ -6,8 +6,6 @@ import 'boxicons';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input/input';
 
-import supabase from "../../../supabase/config";
-
 export default function Home() {
 
     const [students, setStudents] = useState([]);
@@ -36,8 +34,7 @@ export default function Home() {
     const [parentNeeded, setParentNeeded] = useState(false);
 
     useEffect(() => {
-        //fetchData()//
-        console.log(supabase);
+        fetchData()//
     }, [students, lessons]);
 
     const userUid = auth.currentUser.uid;
